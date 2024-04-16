@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { TbFolderSearch } from "react-icons/tb";
 import dataSingleCost from "@/json/singleCost";
 import { IoMdArrowRoundUp } from "react-icons/io";
+import { cn } from "@/lib/utils";
+import { RiArrowUpDownLine } from "react-icons/ri";
 
 type TRow = {
   day: number;
@@ -23,10 +25,11 @@ type TRow = {
   cost: number;
 };
 
-export default function page() {
+export default function Page() {
   const [currentDay, setCurrentDay] = useState<number>(0);
   const [planDay, setPlanDay] = useState<number>(0);
   const [resultTable, setResultTable] = useState<TRow[]>([]);
+  const [sort, setSort] = useState(false);
 
   useEffect(() => {
     const currentday = localStorage.getItem("current-day");
@@ -41,6 +44,14 @@ export default function page() {
     const data = dataSingleCost.filter(day => day.day >= currentDay && day.day <= planDay)
     setResultTable(data)
   };
+
+  function handleSortAZ(){
+    setResultTable(resultTable.sort((a: { cost: number; },b: { cost: number; }) => a.cost - b.cost))
+  }
+
+  function handleSortZA(){
+    setResultTable(resultTable.sort((a: { cost: number; },b: { cost: number; }) => b.cost - a.cost))
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center py-12">
@@ -109,22 +120,49 @@ export default function page() {
         </Button>
         {resultTable.length !== 0 ? (
           <Table className="mt-8">
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of cost day.</TableCaption>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Day</TableHead>
-                <TableHead>Skip Day</TableHead>
-                <TableHead>Tickets</TableHead>
-                <TableHead className="text-right">Cost</TableHead>
-              </TableRow>
+            <TableRow className="bg-primary hover:bg-primary select-none">
+              <TableHead className="text-center font-bold text-white">
+                Day
+              </TableHead>
+              <TableHead className="text-center font-bold text-white">
+                Skip day
+              </TableHead>
+              <TableHead className="text-center font-bold text-white">
+                Tickets
+              </TableHead>
+              <TableHead onClick={() => {
+                setSort(!sort)
+                if(sort){
+                  handleSortZA()
+                } else handleSortAZ()
+              }} className="font-bold text-white flex items-center justify-center gap-2 cursor-pointer">
+                Cost <RiArrowUpDownLine className="w-4 h-4" />
+              </TableHead>
+            </TableRow>
+
             </TableHeader>
             <TableBody>
                 {resultTable.map(row => (
-                    <TableRow className="bg-sky-600">
-                    <TableCell className="font-medium">{row?.day}</TableCell>
-                    <TableCell>{row?.skip}</TableCell>
-                    <TableCell>{Math.floor(row?.skip)}</TableCell>
-                    <TableCell className="text-right">{Math.floor(row?.cost)}</TableCell>
+                    <TableRow key={row.day} className={cn("border h-[24px] border-slate-400 hover:bg-black/80 duration-500 text-white cursor-pointer",
+                    ((row.cost >=  162 && row.cost <= 180) && "bg-[#1ac000]" ),
+                    ((row.cost >=  180 && row.cost <= 199) && "bg-[#33b300]" ),
+                    ((row.cost >=  199 && row.cost <= 218) && "bg-[#4d9900]" ),
+                    ((row.cost >=  218 && row.cost <= 237) && "bg-[#669900]" ),
+                    ((row.cost >=  237 && row.cost <= 256) && "bg-[#808000]" ),
+                    ((row.cost >=  256 && row.cost <= 275) && "bg-[#996600]" ),
+                    ((row.cost >=  275 && row.cost <= 294) && "bg-[#b24c00]" ),
+                    ((row.cost >=  294 && row.cost <= 313) && "bg-[#cc3200]" ),
+                    ((row.cost >=  313 && row.cost <= 332) && "bg-[#e51900]" ),
+                    ((row.cost >=  332 && row.cost <= 354) && "bg-[#ff0000]" ),
+                    ((row.cost >=  354 && row.cost <= 400) && "bg-[#441111]" ),
+                  )}
+  >
+                    <TableCell className="text-center">{row?.day}</TableCell>
+                    <TableCell className="text-center">{row?.skip}</TableCell>
+                    <TableCell className="text-center">{Math.floor(row?.skip)}</TableCell>
+                    <TableCell className="text-center">{Math.floor(row?.cost)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

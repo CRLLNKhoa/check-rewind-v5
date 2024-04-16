@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={rubik.className}>
         <Header /> 
         <main className="w-full">
-          <div className="mx-auto max-w-[1200px]">{children}</div>
+          <div className="mx-auto max-w-[1024px]">{children}</div>
         </main>
         <Footer />
         </body>
