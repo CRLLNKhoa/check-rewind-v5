@@ -160,7 +160,7 @@ export default function Page() {
         </div>}
       <h1 className="font-bold text-xl border-b pb-1 mb-4">Add new Log</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
           <p className="w-8 h-8 mr-4">Day: </p>
           <Input
             type="text"
@@ -169,6 +169,7 @@ export default function Page() {
             onChange={(e) =>
               setInputData({ ...inputData, day: e.target.value })
             }
+            className="min-w-[200px]"
           />
         </div>
         <div className="flex items-center justify-between col-span-2">
@@ -207,7 +208,7 @@ export default function Page() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/empng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -216,7 +217,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, em: e.target.value })}
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/bdpng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -225,7 +226,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, bd: e.target.value })}
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/uppng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -234,7 +235,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, up: e.target.value })}
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/inspng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -243,7 +244,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, in: e.target.value })}
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/mspng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -252,7 +253,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, ms: e.target.value })}
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2 lg:col-span-1">
           <img src="/skill/bspng.png" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -261,7 +262,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, bs: e.target.value })}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center  gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/crit.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -286,7 +287,7 @@ export default function Page() {
             }
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/dame.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -311,7 +312,7 @@ export default function Page() {
             }
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/hero.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -336,7 +337,7 @@ export default function Page() {
             }
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/cc.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
@@ -345,7 +346,7 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, cc: e.target.value })}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/heal.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
             type="text"
