@@ -1,4 +1,4 @@
-export const doubleCost = [
+ const doubleCost = [
     {
         day: 2000,
         rwOneDay: 1500,
@@ -25991,3 +25991,5 @@ export const doubleCost = [
         cost: 635
     }
 ]
+
+export default doubleCost

@@ -12,7 +12,7 @@ export default function CheckMenu() {
     visible: { x: 0, opacity: 1 }, // Kết thúc tại vị trí tự nhiên và độ trong suốt là 1
   };
   return (
-    <div className="relative">
+    <div className="relative hidden lg:block">
       <div onClick={() => setIsShow(!isShow)} className={cn("hover:text-pink-600 z-50 flex items-center cursor-pointer px-4 py-1 rounded-md duration-500 font-semibold",isShow && "text-pink-500")}>
         Check <GoTriangleDown />
       </div>
