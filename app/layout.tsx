@@ -7,6 +7,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoticPopup from "@/components/noticPopup";
+import { Analytics } from "@vercel/analytics/react"
 //👇 Configure our font object
 const rubik = Rubik({
   subsets: ['latin'],
@@ -47,7 +48,7 @@ export default function RootLayout({
       <body className={rubik.className}>
         <Header /> 
         <main className="w-full">
-          <div className="mx-auto max-w-[1024px]">{children}</div>
+          <div className="mx-auto max-w-[1024px]">{children}<Analytics /></div>
         </main>
         <Footer />
         <ToastContainer />
