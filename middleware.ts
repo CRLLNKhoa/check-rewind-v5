@@ -7,7 +7,11 @@ export default authMiddleware({
     "/",
     "/triple-rewind",
     "/push",
-    "/push/:player"
+    "/push/:player",
+    "/other-app",
+    "/calculator",
+    "/about-me",
+    "/teams"
   ],
 });
 
