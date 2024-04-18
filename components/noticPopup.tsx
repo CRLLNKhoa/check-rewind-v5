@@ -35,7 +35,7 @@ export default function NoticPopup() {
       <div className="bg-white absolute w-full max-w-lg p-6 rounded-lg shadow-lg">
         <h1 className="font-bold text-xl">Thông báo</h1>
         <div className="my-6 flex flex-col flex-wrap">
-            1. Nếu các bạn dùng địa chỉ "https://www.luongkhoa.shop" để truy cập chuyển xin hãy chuyển sang địa chỉ: 
+            1. Nếu các bạn dùng địa chỉ "https://www.luongkhoa.shop" (sẽ hết truy cập đc trong tháng 5) để truy cập chuyển xin hãy chuyển sang địa chỉ : 
             <a className="text-sky-500 underline" href="https://check-rewind.vercel.app">"https://check-rewind.vercel.app"</a>
         </div>
         <div className="my-6 flex items-center">
