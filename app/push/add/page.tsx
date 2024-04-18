@@ -162,7 +162,7 @@ export default function Page() {
             <AiOutlineLoading3Quarters className="w-8 h-8 animate-spin" />
             </div>
         </div>}
-      <h1 className="font-bold text-xl border-b pb-1 mb-4">Add new Log</h1>
+      <h1 className="font-bold text-xl border-b pb-1 mb-4">Thêm mới (Đăng nhập để lưu lại)</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="flex items-center w-full">
           <p className="w-8 h-8 mr-4">Day: </p>
