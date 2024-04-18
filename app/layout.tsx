@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import { ClerkProvider } from '@clerk/nextjs'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NoticPopup from "@/components/noticPopup";
 //👇 Configure our font object
 const rubik = Rubik({
   subsets: ['latin'],
@@ -50,6 +51,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ToastContainer />
+        <NoticPopup />
         </body>
     </html>
     </ClerkProvider>

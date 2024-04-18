@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
+import { deleteLog } from "@/actions/log";
+import { toast } from "react-toastify";
+import { format, formatDistance, subDays } from 'date-fns'
+import Link from "next/link";
 
 export default function CardPushDay({ data }: { data: any }) {
   const {
@@ -21,20 +27,62 @@ export default function CardPushDay({ data }: { data: any }) {
     heal,
     team,
     day,
-    hl,player
+    hl,
+    player,
+    id,
+    wt,created_at
   } = data;
+  const pathname = usePathname();
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      window?.location?.reload();
+    }
+  }, [deleteSuccess]);
+
+  const handleDelete = async () => {
+    const result = await deleteLog(id);
+    if (result?.status === 200) {
+      toast.success("Delete success!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setDeleteSuccess(!deleteSuccess);
+    } else {
+      toast.error("Delete error!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
         <AccordionTrigger>
           <div className="flex items-center w-full px-2 rounded-lg py-2 justify-between">
             <h2>Day: {day}</h2>
-            {player && <h2>Player: {player}</h2>}
+            <p>{formatDistance(created_at, new Date().getTime(), { addSuffix: true })}</p>
+            {(player && pathname !== "/push/add" && pathname !== `/push/${player}`) && <h2>Player: {player}</h2>}
             <div className="hidden lg:flex  items-center">
               <h2 className="font-bold mr-2">Team:</h2>
               <div className="flex items-center gap-1 ">
-                {team?.map((item:any) => (
-                    <img
+                {team?.map((item: any) => (
+                  <img
+                    key={item}
                     src={`/hero/${item}.png`}
                     alt="hero_img"
                     className="w-8 h-8 rounded-full"
@@ -104,11 +152,19 @@ export default function CardPushDay({ data }: { data: any }) {
                 <div className="ml-2 flex items-center">: {heal}</div>
               </div>
             </div>
+            <div className="flex items-center">
+              <h2 className="font-bold mr-2">World Tree:</h2>
+              <p>{wt}</p>
+            </div>
+            <div className="flex items-center">
+              <Link href={`/push/${player}`} className="font-bold mr-2 mt-2 text-sky-600">Xem nhật kí của {player} (Tại đây)</Link>
+            </div>
             <div className="flex lg:hidden  items-center">
               <h2 className="font-bold mr-2">Team:</h2>
               <div className="flex items-center gap-1 ">
-                {team?.map((item:any) => (
-                    <img
+                {team?.map((item: any) => (
+                  <img
+                    key={item}
                     src={`/hero/${item}.png`}
                     alt="hero_img"
                     className="w-8 h-8 rounded-full"
@@ -116,6 +172,15 @@ export default function CardPushDay({ data }: { data: any }) {
                 ))}
               </div>
             </div>
+            {pathname === "/push/add" && (
+              <Button
+                onClick={handleDelete}
+                className="ml-auto"
+                variant={"destructive"}
+              >
+                Delete
+              </Button>
+            )}
           </div>
         </AccordionContent>
       </AccordionItem>

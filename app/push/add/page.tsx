@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -31,6 +30,8 @@ export type TInputData = {
   team: any;
   day: any;
   player?: string
+  hl: any,
+  wt?: any
 };
 
 export default function Page() {
@@ -40,6 +41,7 @@ export default function Page() {
     up: "",
     in: "",
     ms: "",
+    hl: "",
     bs: "",
     crit: { lv: "", lvUnl: "" },
     dame: { lv: "", lvUnl: "" },
@@ -48,6 +50,7 @@ export default function Page() {
     heal: "",
     team: [],
     day: "",
+    wt: "",
   });
 
   const [isLoading,setIsLoading] = useState(true)
@@ -117,6 +120,7 @@ export default function Page() {
       inputData.up !== "" &&
       inputData.in !== "" &&
       inputData.ms !== "" &&
+      inputData.hl !== "" &&
       inputData.bs !== "" &&
       inputData.crit.lv !== "" &&
       inputData.crit.lvUnl !== "" &&
@@ -262,6 +266,15 @@ export default function Page() {
             onChange={(e) => setInputData({ ...inputData, bs: e.target.value })}
           />
         </div>
+        <div className="flex items-center col-span-2 lg:col-span-1">
+          <img src="/skill/hlpng.png" alt="skill" className="w-8 h-8 mr-4" />
+          <Input
+            type="text"
+            placeholder="Level..."
+            value={inputData.hl}
+            onChange={(e) => setInputData({ ...inputData, hl: e.target.value })}
+          />
+        </div>
         <div className="flex items-center  gap-2 col-span-2 lg:col-span-1">
           <img src="/runes/crit.webp" alt="skill" className="w-8 h-8 mr-4" />
           <Input
@@ -355,6 +368,15 @@ export default function Page() {
             onChange={(e) =>
               setInputData({ ...inputData, heal: e.target.value })
             }
+          />
+        </div>
+           <div className="flex items-center col-span-2 lg:col-span-2">
+          <p>World Tree:</p>
+          <Input className="flex-1 ml-4"
+            type="text"
+            placeholder="Level..."
+            value={inputData.wt}
+            onChange={(e) => setInputData({ ...inputData, wt: e.target.value })}
           />
         </div>
         <Button onClick={handleAdd}>Add Log</Button>

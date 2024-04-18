@@ -7,6 +7,7 @@ export default authMiddleware({
     "/",
     "/triple-rewind",
     "/push",
+    "/push/:player"
   ],
 });
 
