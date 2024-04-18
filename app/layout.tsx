@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Check rewind",
     images: [
       {
-        url: "https://i.ibb.co/bPt4cgf/seo.png", // Must be an absolute URL
+        url: "https://i.ibb.co/JsjvtJn/www-check-rewind-vercel-app.png", // Must be an absolute URL
       },
     ],
     locale: "vi",
