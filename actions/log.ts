@@ -26,7 +26,7 @@ export async function getAllLog(limit:number) {
       .select("id")
       const { data, error } = await supabase
         .from("log")
-        .select("*").limit(limit).order("created_at",{ascending: true})
+        .select("*").limit(limit).order("created_at",{ascending: false})
       if (error) {
         return { status: 400, data: [error] };
       } else return { status: 200, data: data, count: log?.length };
