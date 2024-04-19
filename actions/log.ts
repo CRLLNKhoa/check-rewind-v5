@@ -80,3 +80,14 @@ export async function getLogs(player:string) {
     console.log(error);
   }
 }
+
+export async function getLogined() {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return { status: 400, isLogin: false };
+    } else return { status: 200, isLogin: true };
+  } catch (error) {
+    console.log(error);
+  }
+}

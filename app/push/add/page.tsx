@@ -11,9 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
-import { addLog, getLog } from "@/actions/log";
+import { addLog, getLog, getLogined } from "@/actions/log";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { SignIn, useUser } from "@clerk/clerk-react";
 
 export type TInputData = {
   em: any;
@@ -29,9 +31,9 @@ export type TInputData = {
   heal: any;
   team: any;
   day: any;
-  player?: string
-  hl: any,
-  wt?: any
+  player?: string;
+  hl: any;
+  wt?: any;
 };
 
 export default function Page() {
@@ -53,7 +55,7 @@ export default function Page() {
     wt: "",
   });
 
-  const [isLoading,setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const [listLog, setListLog] = useState<TInputData[]>([]);
 
@@ -80,21 +82,40 @@ export default function Page() {
       theme: "colored",
     });
 
-    useEffect(() => {
-      const handleGet =  async () => {
-        const result  = await getLog()
-        if(result?.status === 200){
-            setListLog(result.data)
-            setIsLoading(false)
-        }else {
-            setListLog([])
-            setIsLoading(false)
-        }
+  useEffect(() => {
+    const handleGet = async () => {
+      const result = await getLog();
+      if (result?.status === 200) {
+        setListLog(result.data);
+        setIsLoading(false);
+      } else {
+        setListLog([]);
+        setIsLoading(false);
       }
-      handleGet()
-    }, [])
-    
+    };
+    handleGet();
+  }, []);
 
+  const { user } = useUser();
+  console.log(user);
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center my-6 bg-white min-h-screen p-6 shadow-lg rounded-lg">
+        <SignIn />
+      </div>
+    );
+  }
+  // const router = useRouter()
+  // useEffect(() => {
+  //   const handleGetStatusLogin = async () => {
+  //     const isLogin = await getLogined();
+  //     console.log(isLogin)
+  //     if (!isLogin?.isLogin) {
+  //       router.push("/sign-in?redirect_url=/push/add")
+  //     }
+  //   };
+  //   handleGetStatusLogin()
+  // }, []);
 
   const handleSelectHero = (id: number) => {
     if (inputData.team.includes(id)) {
@@ -130,39 +151,41 @@ export default function Page() {
       inputData.hero.lvUnl !== "" &&
       inputData.cc !== "" &&
       inputData.heal !== ""
-    ){
-        setIsLoading(true)
-        const result = await addLog(inputData)
-        if(result?.status === 200){
-            setListLog([...listLog, result.data[0]])
-            setInputData({...inputData, day: ""})
-            setIsLoading(false)
-            notifySuccess()
-        }
+    ) {
+      setIsLoading(true);
+      const result = await addLog(inputData);
+      if (result?.status === 200) {
+        setListLog([...listLog, result.data[0]]);
+        setInputData({ ...inputData, day: "" });
+        setIsLoading(false);
+        notifySuccess();
+      }
+    } else {
+      toast.error("Nhập chưa đủ thông tin!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
-    else{
-        toast.error("Nhập chưa đủ thông tin!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-    }
-      
   };
 
   return (
     <div className="flex flex-col my-6 bg-white min-h-screen p-6 shadow-lg rounded-lg">
-       {isLoading &&  <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/40">
-            <div className="absolute size-24 rounded-lg left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white flex items-center justify-center">
+      {isLoading && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/40">
+          <div className="absolute size-24 rounded-lg left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white flex items-center justify-center">
             <AiOutlineLoading3Quarters className="w-8 h-8 animate-spin" />
-            </div>
-        </div>}
-      <h1 className="font-bold text-xl border-b pb-1 mb-4">Thêm mới (Đăng nhập để lưu lại)</h1>
+          </div>
+        </div>
+      )}
+      <h1 className="font-bold text-xl border-b pb-1 mb-4">
+        Thêm mới (Đăng nhập để lưu lại)
+      </h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="flex items-center w-full">
           <p className="w-8 h-8 mr-4">Day: </p>
@@ -205,7 +228,10 @@ export default function Page() {
                     key={i}
                     src={`/hero/${i + 1}.png`}
                     alt="heroes"
-                    className={cn("border-4  w-12 h-12 rounded-full cursor-pointer", inputData.team.includes(i+1) && "border-red-500")}
+                    className={cn(
+                      "border-4  w-12 h-12 rounded-full cursor-pointer",
+                      inputData.team.includes(i + 1) && "border-red-500"
+                    )}
                   />
                 ))}
               </div>
@@ -370,9 +396,10 @@ export default function Page() {
             }
           />
         </div>
-           <div className="flex items-center col-span-2 lg:col-span-2">
+        <div className="flex items-center col-span-2 lg:col-span-2">
           <p>World Tree:</p>
-          <Input className="flex-1 ml-4"
+          <Input
+            className="flex-1 ml-4"
             type="text"
             placeholder="Level..."
             value={inputData.wt}
@@ -384,7 +411,7 @@ export default function Page() {
       <div className="flex flex-col border-t mt-4">
         <h1 className="font-bold text-xl mt-4 border-b pb-1">Your log list</h1>
         {listLog?.map((item) => (
-          <CardPushDay data={item} />
+          <CardPushDay key={item.day} data={item} />
         ))}
       </div>
     </div>
