@@ -161,7 +161,7 @@ export default function Page() {
   >
                     <TableCell className="text-center">{row?.day}</TableCell>
                     <TableCell className="text-center">{row?.skip}</TableCell>
-                    <TableCell className="text-center">{Math.floor(row?.skip)}</TableCell>
+                    <TableCell className="text-center">{Math.floor(row?.tickets)}</TableCell>
                     <TableCell className="text-center">{Math.floor(row?.cost)}</TableCell>
                   </TableRow>
                 ))}
